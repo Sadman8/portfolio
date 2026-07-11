@@ -22,18 +22,19 @@
   const GH_CONFIG_KEY = 'portfolio_gh_config';
 
   /* ============ DATA LOADING ============
-     1. If this browser has a local draft (owner editing), use it so reloads
-        don't lose unsaved work.
-     2. Otherwise fetch data.json - the committed, live content every visitor sees. */
+     Every page load always pulls the live content from data.json (the file
+     committed on GitHub) - so visitors and you always start from what's
+     actually live. If data.json can't be reached (offline, or opened via
+     file://) it falls back to whatever was last saved in this browser. */
   async function loadAll(){
-    const local = localStorage.getItem(LOCAL_KEY);
-    if(local){
-      try{ DATA = mergeDefaults(JSON.parse(local)); return; }catch(e){}
-    }
     try{
       const res = await fetch('./data.json', {cache:'no-store'});
-      if(res.ok){ DATA = mergeDefaults(await res.json()); }
-    }catch(e){ /* offline or opened via file:// - fall back to defaults */ }
+      if(res.ok){ DATA = mergeDefaults(await res.json()); return; }
+    }catch(e){ /* unreachable - fall through to local fallback below */ }
+    const local = localStorage.getItem(LOCAL_KEY);
+    if(local){
+      try{ DATA = mergeDefaults(JSON.parse(local)); }catch(e){}
+    }
   }
   function mergeDefaults(obj){
     return {
