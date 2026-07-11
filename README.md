@@ -33,7 +33,7 @@ See SETUP.md for the full walkthrough. Short version:
 
 Push these files to a public GitHub repo.
 Enable Settings → Pages (deploy from main, root folder).
-Open the live site, enter edit mode (Shift + 697427), fill in your info and photos.
+Open the live site, enter edit mode (**********), fill in your info and photos.
 Generate a fine-grained GitHub token scoped to only this repo with Contents: Read and write, and connect it in the edit-mode panel.
 Click Push to GitHub whenever you want your edits to go live.
 
