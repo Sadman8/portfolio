@@ -1,0 +1,21 @@
+{
+  "profile": {
+    "name": "Your Name",
+    "role": "Software Engineer // Systems Thinker",
+    "bio": "A short bio about you goes here. Enter the secret combo to unlock edit mode and type over this text.",
+    "email": "you@example.com",
+    "location": "Dhaka, Bangladesh",
+    "github": "github.com/username",
+    "linkedin": "linkedin.com/in/username",
+    "skills": ["JavaScript", "Python", "React", "Node.js", "SQL", "Linux"],
+    "avatar": null
+  },
+  "photos": [null, null, null, null, null, null, null, null, null, null],
+  "projects": [
+    { "title": "Project One", "desc": "Short description of what this project does and the problem it solves.", "link": "https://github.com", "image": null },
+    { "title": "Project Two", "desc": "Short description of what this project does and the problem it solves.", "link": "https://github.com", "image": null },
+    { "title": "Project Three", "desc": "Short description of what this project does and the problem it solves.", "link": "https://github.com", "image": null }
+  ],
+  "customBlocks": [],
+  "theme": { "accent": "#3dff96", "mode": "dark" }
+}
