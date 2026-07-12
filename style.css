@@ -128,7 +128,7 @@ main{max-width:90%; margin:0 auto; padding:0 24px;}
 .g-slot .up{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(4,10,7,.75);color:var(--green);font-size:11px;cursor:pointer;}
 
 .projects-list{display:flex;flex-direction:column;gap:2px;}
-.proj-row{display:grid;grid-template-columns:auto 120px 1fr auto;gap:16px;align-items:center;padding:16px 12px;border-bottom:1px solid var(--panel-line);}
+.proj-row{display:grid;grid-template-columns:auto 120px 1fr auto !important;gap:16px;align-items:center;padding:16px 12px;border-bottom:1px solid var(--panel-line);}
 .proj-row:hover{background:rgba(61,255,150,.03);}
 .proj-id{color:var(--green-dim);font-size:12px;align-self:start;padding-top:4px;}
 .proj-img{width:120px;height:80px;border:1px solid var(--panel-line);background:var(--panel);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;opacity:0;}
