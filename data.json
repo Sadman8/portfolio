@@ -34,19 +34,22 @@
       "title": "Project One",
       "desc": "Short description of what this project does and the problem it solves.",
       "link": "https://github.com",
-      "image": null
+      "image": null,
+      "video": null
     },
     {
       "title": "Project Two",
       "desc": "Short description of what this project does and the problem it solves.",
       "link": "https://github.com",
-      "image": null
+      "image": null,
+      "video": null
     },
     {
       "title": "Project Three",
       "desc": "Short description of what this project does and the problem it solves.",
       "link": "https://github.com",
-      "image": null
+      "image": null,
+      "video": null
     }
   ],
   "customBlocks": [],
