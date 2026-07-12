@@ -51,7 +51,7 @@
   ],
   "customBlocks": [],
   "theme": {
-    "accent": "#a4fece",
-    "mode": "dark"
+    "accent": "#ff4d6d",
+    "mode": "light"
   }
 }
