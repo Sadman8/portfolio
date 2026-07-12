@@ -56,5 +56,6 @@
   "theme": {
     "accent": "#3dff96",
     "mode": "dark"
+    "bgFace": null
   }
 }
