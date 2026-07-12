@@ -13,7 +13,7 @@
       {title:"Project Three", desc:"Short description of what this project does and the problem it solves.", link:"https://github.com", image:null, video:null}
     ],
     customBlocks:[],
-    theme:{accent:"#3dff96", mode:"dark"}
+    theme:{accent:"#3dff96", mode:"dark", bgFace:null}
   };
 
   let DATA = JSON.parse(JSON.stringify(DEFAULT_DATA));
@@ -214,7 +214,27 @@
       root.setProperty('--panel','#08130f'); root.setProperty('--panel-line','#123423');
       root.setProperty('--text','#cdf9df'); root.setProperty('--text-dim','#5f9c7c');
     }
+    renderBgFace();
   }
+  function renderBgFace(){
+    const el = document.getElementById('bgFace');
+    if(DATA.theme.bgFace){
+      el.style.backgroundImage = "url('"+DATA.theme.bgFace+"')";
+      el.classList.add('show');
+    } else {
+      el.style.backgroundImage = '';
+      el.classList.remove('show');
+    }
+  }
+  document.getElementById('bgFaceUploadBtn').addEventListener('click', ()=>document.getElementById('bgFaceInput').click());
+  document.getElementById('bgFaceInput').addEventListener('change', async (e)=>{
+    const f = e.target.files[0]; if(!f) return;
+    DATA.theme.bgFace = await resizeImage(f, 900);
+    renderBgFace(); saveLocal();
+  });
+  document.getElementById('bgFaceRemoveBtn').addEventListener('click', ()=>{
+    DATA.theme.bgFace = null; renderBgFace(); saveLocal();
+  });
   const PRESETS = ["#3dff96","#3dd9ff","#ffb347","#ff4d6d","#b57bff","#f2f2f2"];
   function renderThemePanel(){
     const sw = document.getElementById('swatches'); sw.innerHTML='';
@@ -647,7 +667,7 @@
   }
   buildLandDots(); buildGraticule(); buildNodes();
 
-  const logPanel = document.getElementById('logPanel');
+  const logPanel = document.getElementById('logPanelBody');
   function pushLog(text, warn){
     const row = document.createElement('div'); const t = new Date().toTimeString().slice(0,8);
     row.innerHTML = '<span class="t">['+t+']</span> '+text; if(warn) row.style.color='var(--amber)';
