@@ -8,9 +8,9 @@
       skills:["JavaScript","Python","React","Node.js","SQL","Linux"], avatar:null },
     photos:new Array(10).fill(null),
     projects:[
-      {title:"Project One", desc:"Short description of what this project does and the problem it solves.", link:"https://github.com", image:null},
-      {title:"Project Two", desc:"Short description of what this project does and the problem it solves.", link:"https://github.com", image:null},
-      {title:"Project Three", desc:"Short description of what this project does and the problem it solves.", link:"https://github.com", image:null}
+      {title:"Project One", desc:"Short description of what this project does and the problem it solves.", link:"https://github.com", image:null, video:null},
+      {title:"Project Two", desc:"Short description of what this project does and the problem it solves.", link:"https://github.com", image:null, video:null},
+      {title:"Project Three", desc:"Short description of what this project does and the problem it solves.", link:"https://github.com", image:null, video:null}
     ],
     customBlocks:[],
     theme:{accent:"#3dff96", mode:"dark"}
@@ -316,6 +316,7 @@
           '<div class="proj-title" contenteditable="false" data-field="title" data-idx="'+i+'">'+(editMode? p.title : '')+'</div>'+
           '<div class="proj-desc" contenteditable="false" data-field="desc" data-idx="'+i+'">'+(editMode? p.desc : '')+'</div>'+
           '<div style="margin-top:6px;"><a class="proj-link portal-link" contenteditable="false" data-field="link" data-idx="'+i+'" href="'+p.link+'" target="_blank" rel="noopener">'+p.link+'</a></div>'+
+          '<div class="proj-video" contenteditable="false" data-field="video" data-idx="'+i+'">'+(p.video||'')+'</div>'+
         '</div>'+
         '<div class="proj-remove" data-idx="'+i+'">remove</div>';
       list.appendChild(row);
@@ -330,6 +331,13 @@
         observeOnce(imgEl, ()=>imgEl.classList.add('anim-slide-left'));
         observeOnce(titleEl, ()=>{ titleEl.style.opacity=1; typeWriter(titleEl, p.title, 22); });
         observeOnce(descEl, ()=>{ descEl.style.opacity=1; setTimeout(()=>typeWriter(descEl, p.desc, 10), p.title.length*22+150); });
+        if(p.video){
+          imgEl.classList.add('has-video');
+          imgEl.addEventListener('click', ()=>{
+            const embed = toYouTubeEmbed(p.video);
+            openPortal(embed || p.video, {type:'video', label:p.title});
+          });
+        }
       }
     });
 
@@ -352,7 +360,7 @@
     });
   }
   document.getElementById('addProjBtn').addEventListener('click', ()=>{
-    DATA.projects.push({title:"New Project", desc:"Describe this project.", link:"https://", image:null});
+    DATA.projects.push({title:"New Project", desc:"Describe this project.", link:"https://", image:null, video:null});
     renderProjects(); saveLocal();
   });
 
@@ -422,7 +430,26 @@
   });
 
   /* ============ LINK PORTAL (map fade + inline preview on link click) ============ */
-  function openPortal(url){
+  const NO_EMBED_DOMAINS = ['github.com','linkedin.com','x.com','twitter.com','instagram.com','facebook.com'];
+  function isNoEmbedDomain(hostname){
+    return NO_EMBED_DOMAINS.some(d => hostname===d || hostname.endsWith('.'+d));
+  }
+  function toYouTubeEmbed(url){
+    try{
+      const u = new URL(url);
+      let id = '';
+      if(u.hostname.replace('www.','')==='youtu.be'){ id = u.pathname.slice(1); }
+      else if(u.searchParams.get('v')){ id = u.searchParams.get('v'); }
+      else if(u.pathname.indexOf('/embed/')===0){ id = u.pathname.split('/embed/')[1]; }
+      else if(u.pathname.indexOf('/shorts/')===0){ id = u.pathname.split('/shorts/')[1]; }
+      id = (id||'').split('&')[0].split('?')[0];
+      if(!id) return null;
+      return 'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0';
+    }catch(e){ return null; }
+  }
+
+  function openPortal(url, opts){
+    opts = opts || {};
     const mapWrap = document.getElementById('mapWrap');
     mapWrap.scrollIntoView({behavior:'smooth', block:'center'});
 
@@ -442,22 +469,45 @@
         '<div class="portal-boot">'+
           '<div id="portalBootText">ESTABLISHING UPLINK...</div>'+
           '<div class="portal-bar"><span id="portalBarFill"></span></div>'+
-          '<div style="font-size:10px;color:var(--text-dim);max-width:320px;">Some destinations block inline embedding — use OPEN IN NEW TAB if nothing appears.</div>'+
+          '<div id="portalHint" style="font-size:10px;color:var(--text-dim);max-width:320px;"></div>'+
         '</div>'+
-        '<iframe id="portalFrame"></iframe>';
+        '<iframe id="portalFrame" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';
       mapWrap.appendChild(portal);
       document.getElementById('portalCloseBtn').addEventListener('click', closePortal);
-      document.getElementById('portalOpenBtn').addEventListener('click', ()=>window.open(portal.dataset.url,'_blank','noopener'));
+      document.getElementById('portalOpenBtn').addEventListener('click', ()=>window.open(portal.dataset.openUrl||portal.dataset.url,'_blank','noopener'));
     }
 
+    const isMail = url.indexOf('mailto:') === 0;
+    const isVideo = opts.type === 'video';
+    const embedUrl = isVideo ? toYouTubeEmbed(url) : null;
+
+    let hostname = '';
+    try{ hostname = new URL(url, location.href).hostname; }catch(e){}
+    const blocked = !isMail && !isVideo && isNoEmbedDomain(hostname);
+
     portal.dataset.url = url;
+    portal.dataset.openUrl = url;
     portal.classList.remove('loaded');
     document.getElementById('portalFrame').src = 'about:blank';
 
-    let domain = url;
-    try{ domain = new URL(url, location.href).hostname || url; }catch(e){}
-    document.getElementById('portalDomain').textContent = domain;
-    document.getElementById('portalBootText').textContent = 'ESTABLISHING UPLINK TO '+domain.toUpperCase()+' ...';
+    const label = isVideo ? (opts.label ? opts.label.toUpperCase() : 'PROJECT DEMO') : (hostname || url);
+    document.getElementById('portalDomain').textContent = label;
+
+    const bootTextEl = document.getElementById('portalBootText');
+    const hintEl = document.getElementById('portalHint');
+    if(isMail){
+      bootTextEl.textContent = 'ESTABLISHING UPLINK TO '+(hostname||'MAIL')+' ...';
+      hintEl.textContent = '';
+    } else if(blocked){
+      bootTextEl.textContent = 'ESTABLISHING UPLINK TO '+hostname.toUpperCase()+' ...';
+      hintEl.textContent = hostname+' blocks inline embedding — opening it in a new tab instead.';
+    } else if(isVideo){
+      bootTextEl.textContent = 'DECRYPTING VIDEO FEED ...';
+      hintEl.textContent = embedUrl ? '' : 'Could not read that YouTube link — check it in edit mode.';
+    } else {
+      bootTextEl.textContent = 'ESTABLISHING UPLINK TO '+(hostname||url).toUpperCase()+' ...';
+      hintEl.textContent = 'Some destinations block inline embedding — use OPEN IN NEW TAB if nothing appears.';
+    }
 
     const bar = document.getElementById('portalBarFill');
     bar.style.width = '0%';
@@ -469,13 +519,22 @@
       requestAnimationFrame(()=>{ bar.style.width = '100%'; });
     }, 500);
 
-    const isMail = url.indexOf('mailto:') === 0;
     clearTimeout(portal._loadT);
     portal._loadT = setTimeout(()=>{
       if(isMail){
-        document.getElementById('portalBootText').textContent = 'LAUNCHING MAIL CLIENT...';
+        bootTextEl.textContent = 'LAUNCHING MAIL CLIENT...';
         window.location.href = url;
         setTimeout(closePortal, 900);
+      } else if(blocked){
+        window.open(url,'_blank','noopener');
+        setTimeout(closePortal, 500);
+      } else if(isVideo){
+        if(embedUrl){
+          document.getElementById('portalFrame').src = embedUrl;
+          portal.classList.add('loaded');
+        } else {
+          setTimeout(closePortal, 1200);
+        }
       } else {
         document.getElementById('portalFrame').src = url;
         portal.classList.add('loaded');
@@ -612,8 +671,15 @@
   }
   function showBurst(node){
     const src = nextPhoto();
-    photoBurst.style.left = (node.x/VB_W*100)+'%';
-    photoBurst.style.top = (node.y/VB_H*100)+'%';
+    const rect = mapWrap.getBoundingClientRect();
+    const popW = 180, popH = 160; // approx footprint of the popup (width + est. height incl caption)
+    let leftPx = (node.x/VB_W)*rect.width;
+    let topPx = (node.y/VB_H)*rect.height;
+    const halfW = popW/2;
+    leftPx = Math.max(halfW+6, Math.min(rect.width-halfW-6, leftPx));
+    topPx = Math.max(popH+6, Math.min(rect.height-6, topPx));
+    photoBurst.style.left = leftPx+'px';
+    photoBurst.style.top = topPx+'px';
     if(src){ photoBurstImg.src=src; photoBurstImg.style.display='block'; } else { photoBurstImg.style.display='none'; }
     photoBurst.classList.add('show');
     clearTimeout(photoBurst._t);
