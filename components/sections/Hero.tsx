@@ -10,8 +10,6 @@ export default function Hero() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
-  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '-40%']);
   const textOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0]);
 
@@ -33,26 +31,16 @@ export default function Hero() {
       className="relative flex min-h-screen items-end sm:items-center justify-center overflow-hidden pb-16 pt-32 sm:pt-20"
     >
       {/* Full-bleed background image */}
-      <motion.div
-        style={{ y: imageY, scale: imageScale }}
-        className="absolute inset-0 z-0"
-      >
-        <motion.img
-          src="/WhatsApp_Image_2026-07-30_at_2.57.35_PM copy.jpeg"
-          alt={personalInfo.name}
-          className="h-full w-full object-cover object-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2.6, duration: 1.2 }}
-        />
-        {/* Gradient overlays for readability */}
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-[var(--hero-overlay-t)] via-[var(--hero-overlay-mid)] to-[var(--hero-overlay-top)]"
-        />
-        <div
-          className="absolute inset-0 bg-gradient-to-r from-[var(--hero-overlay-side)] via-transparent to-[var(--hero-overlay-side)]"
-        />
-      </motion.div>
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/WhatsApp_Image_2026-07-30_at_2.57.35_PM copy.jpeg')",
+          filter: 'brightness(var(--img-brightness)) contrast(var(--img-contrast))',
+        }}
+      />
+      {/* Gradient overlays for readability */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-t from-[var(--hero-overlay-t)] via-[var(--hero-overlay-mid)] to-[var(--hero-overlay-top)]" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-r from-[var(--hero-overlay-side)] via-transparent to-[var(--hero-overlay-side)]" />
 
       {/* Floating subtle blobs */}
       <motion.div
