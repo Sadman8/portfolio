@@ -10,6 +10,8 @@ export default function Hero() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '-40%']);
   const textOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [1, 1, 0]);
 
@@ -30,13 +32,13 @@ export default function Hero() {
       ref={ref}
       className="relative flex min-h-screen items-end sm:items-center justify-center overflow-hidden pb-16 pt-32 sm:pt-20"
     >
-{/* Full-bleed portrait — brightened, blended */}
+      {/* Full-bleed portrait — brightened, blended */}
       <motion.div
         style={{ y: imageY, scale: imageScale }}
         className="absolute inset-0 z-0 flex items-center justify-center md:block"
       >
         <motion.img
-          src="public/bg.jpeg"
+          src="/WhatsApp_Image_2026-07-24_at_12.47.00_AM.jpeg"
           alt={personalInfo.name}
           className="h-full w-full object-contain object-center"
           initial={{ opacity: 0 }}
@@ -74,11 +76,10 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.8, duration: 0.6 }}
-          className="mb-6 font-inter text-xs tracking-[0.3em] uppercase"
-          style={{ color: 'var(--text-muted)' }}
+          className="mb-6 font-inter text-xs tracking-[0.3em] text-white/40 uppercase"
         >
+                
         </motion.p>
-
         {/* Big bold headline */}
         <div className="w-full flex flex-col lg:flex-row justify-between items-center lg:items-center gap-4 my-auto mt-20 sm:mt-0">
           <h1 className="font-grotesk text-3xl font-bold leading-[0.95] tracking-tight sm:text-5xl lg:text-6xl text-center lg:text-left">
