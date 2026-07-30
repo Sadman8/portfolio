@@ -32,15 +32,11 @@ export default function Hero() {
     >
       {/* Full-bleed background image */}
       <div
-        className="min-h-screen"
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: "url('/home/project/public/WhatsApp_Image_2026-07-24_at_12.47.00_AM.jpeg')",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          backgroundSize: "contain",
+          filter: 'brightness(var(--img-brightness)) contrast(var(--img-contrast))',
         }}
-      >
-      </div>
       />
       {/* Gradient overlays for readability */}
       <div className="absolute inset-0 z-0 bg-gradient-to-t from-[var(--hero-overlay-t)] via-[var(--hero-overlay-mid)] to-[var(--hero-overlay-top)]" />
