@@ -30,17 +30,27 @@ export default function Hero() {
       ref={ref}
       className="relative flex min-h-screen items-end sm:items-center justify-center overflow-hidden pb-16 pt-32 sm:pt-20"
     >
-      {/* Full-bleed background image */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: "url('public/bg.jpeg')",
-          filter: 'brightness(var(--img-brightness)) contrast(var(--img-contrast))',
-        }}
-      />
-      {/* Gradient overlays for readability */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-[var(--hero-overlay-t)] via-[var(--hero-overlay-mid)] to-[var(--hero-overlay-top)]" />
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-[var(--hero-overlay-side)] via-transparent to-[var(--hero-overlay-side)]" />
+{/* Full-bleed portrait — brightened, blended */}
+      <motion.div
+        style={{ y: imageY, scale: imageScale }}
+        className="absolute inset-0 z-0 flex items-center justify-center md:block"
+      >
+        <motion.img
+          src="/WhatsApp_Image_2026-07-24_at_12.47.00_AM.jpeg"
+          alt={personalInfo.name}
+          className="h-full w-full object-contain object-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.6, duration: 1.2 }}
+          style={{
+            mixBlendMode: 'lighten',
+            filter: 'brightness(1.2) contrast(1.05)',
+          }}
+        />
+        {/* Gradient overlays for readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/20 to-[#050505]/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/40 via-transparent to-[#050505]/40" />
+      </motion.div>
 
       {/* Floating subtle blobs */}
       <motion.div
