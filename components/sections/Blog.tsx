@@ -38,7 +38,7 @@ export default function Blog() {
             >
               <div className="relative aspect-[16/9] overflow-hidden">
                 <img src={featured.image} alt={featured.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
                 <span className="absolute top-4 left-4 rounded-full bg-[#7C5CFF] px-3 py-1 font-inter text-xs font-medium text-white">
                   Featured
                 </span>

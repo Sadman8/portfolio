@@ -14,6 +14,8 @@ const config: Config = {
         inter: ['Inter', 'sans-serif'],
       },
       colors: {
+        white: 'rgb(var(--color-white-rgb) / <alpha-value>)',
+        black: 'rgb(var(--color-black-rgb) / <alpha-value>)',
         portfolio: {
           bg: '#050505',
           card: 'rgba(255,255,255,0.05)',

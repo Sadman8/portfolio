@@ -84,7 +84,7 @@ export default function About() {
                 >
                   {/* Year dot */}
                   <div className="absolute left-4 top-2 z-10 -translate-x-1/2 sm:left-1/2">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#7C5CFF]/30 bg-[#050505]">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full border border-[#7C5CFF]/30 bg-black">
                       <span className="font-grotesk text-xs font-bold text-[#7C5CFF]">{item.year}</span>
                     </div>
                   </div>

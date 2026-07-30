@@ -42,7 +42,7 @@ export default function Services() {
                 initial={{ opacity: 0 }}
                 animate={inView ? { opacity: 1 } : {}}
                 transition={{ delay: i * 0.08, duration: 0.5 }}
-                className="group relative bg-[#050505] p-8 transition-colors duration-300 hover:bg-white/[0.03]"
+                className="group relative bg-black p-8 transition-colors duration-300 hover:bg-white/[0.03]"
               >
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/5 transition-all duration-300 group-hover:border-[#7C5CFF]/30 group-hover:bg-[#7C5CFF]/10">
                   <Icon size={20} className="text-[#7C5CFF]" />

@@ -65,7 +65,7 @@ export default function CommandPalette() {
             exit={{ scale: 0.95, y: -10 }}
             transition={{ duration: 0.2 }}
             onClick={(e) => e.stopPropagation()}
-            className="relative w-full max-w-lg rounded-2xl border border-white/10 bg-[#0a0a0a]/95 backdrop-blur-2xl shadow-2xl"
+            className="relative w-full max-w-lg rounded-2xl border border-white/10 bg-black/95 backdrop-blur-2xl shadow-2xl"
           >
             <div className="flex items-center gap-3 border-b border-white/5 px-5 py-4">
               <Search size={18} className="text-white/40" />

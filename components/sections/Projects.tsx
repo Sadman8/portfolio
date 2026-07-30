@@ -101,7 +101,7 @@ export default function Projects() {
                     alt={project.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-[#050505]/40" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/40" />
                 </div>
 
                 {/* Content */}
@@ -156,7 +156,7 @@ export default function Projects() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-white/10 bg-[#0a0a0a]/95 backdrop-blur-2xl"
+              className="relative max-h-[85vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-white/10 bg-black/95 backdrop-blur-2xl"
             >
               <button
                 onClick={() => setSelected(null)}
@@ -166,7 +166,7 @@ export default function Projects() {
               </button>
               <div className="relative aspect-[16/9] overflow-hidden rounded-t-2xl">
                 <img src={selected.image} alt={selected.title} className="h-full w-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
               </div>
               <div className="p-8">
                 <span className="font-inter text-xs tracking-widest text-[#00E7FF] uppercase">

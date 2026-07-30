@@ -40,7 +40,7 @@ export default function Process() {
                   transition={{ delay: i * 0.1, duration: 0.5 }}
                   className="group relative"
                 >
-                  <div className="relative mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-white/10 bg-[#0a0a0a] transition-all duration-300 group-hover:border-[#7C5CFF]/40">
+                  <div className="relative mb-6 flex h-24 w-24 items-center justify-center rounded-full border border-white/10 bg-black transition-all duration-300 group-hover:border-[#7C5CFF]/40">
                     <div className="absolute inset-0 rounded-full bg-[#7C5CFF]/0 blur-[30px] transition-all duration-300 group-hover:bg-[#7C5CFF]/20" />
                     <Icon size={28} className="relative text-[#7C5CFF] transition-transform duration-300 group-hover:scale-110" />
                     <span className="absolute -top-2 -right-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#7C5CFF] font-grotesk text-xs font-bold text-white">
