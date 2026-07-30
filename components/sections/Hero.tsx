@@ -32,37 +32,18 @@ export default function Hero() {
       ref={ref}
       className="relative flex min-h-screen items-end sm:items-center justify-center overflow-hidden pb-16 pt-32 sm:pt-20"
     >
-      {/* Radial soft glow behind subject — visible in dark mode so dark clothing edges don't blend */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
-        aria-hidden
-      >
-        <div
-          className="h-[55vh] w-[55vh] rounded-full blur-[90px]"
-          style={{
-            background:
-              'radial-gradient(circle, rgba(124,92,255,0.28) 0%, rgba(0,231,255,0.12) 45%, transparent 70%)',
-          }}
-        />
-      </div>
-
-      {/* Full-bleed portrait — background-transparent PNG, theme-aware blend */}
+      {/* Full-bleed background image */}
       <motion.div
         style={{ y: imageY, scale: imageScale }}
-        className="absolute inset-0 z-0 flex items-center justify-center md:block"
+        className="absolute inset-0 z-0"
       >
         <motion.img
           src="/image.png"
           alt={personalInfo.name}
-          className="h-full w-full object-contain object-center"
+          className="h-full w-full object-cover object-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.6, duration: 1.2 }}
-          style={{
-            mixBlendMode: 'var(--img-blend)' as React.CSSProperties['mixBlendMode'],
-            filter:
-              'brightness(var(--img-brightness)) contrast(var(--img-contrast)) drop-shadow(0 25px 50px rgba(124,92,255,0.25))',
-          }}
         />
         {/* Gradient overlays for readability */}
         <div
