@@ -34,7 +34,7 @@ export default function Hero() {
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: "url('/home/project/public/WhatsApp_Image_2026-07-24_at_12.47.00_AM.jpeg')",
+          backgroundImage: "url('public/bg.jpeg')",
           filter: 'brightness(var(--img-brightness)) contrast(var(--img-contrast))',
         }}
       />
