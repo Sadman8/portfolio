@@ -38,7 +38,7 @@ export default function Hero() {
         className="absolute inset-0 z-0 flex items-center justify-center md:block"
       >
         <motion.img
-          src="/WhatsApp_Image_2026-07-24_at_12.47.00_AM.jpeg"
+          src="/bg.jpeg"
           alt={personalInfo.name}
           className="h-full w-full object-contain object-center"
           initial={{ opacity: 0 }}
