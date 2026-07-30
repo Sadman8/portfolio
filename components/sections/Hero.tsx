@@ -32,7 +32,7 @@ export default function Hero() {
     >
       {/* Full-bleed background image */}
       <div
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        className="min-h-screen bg-center bg-no-repeat"
         style={{
           backgroundImage: "url('/WhatsApp_Image_2026-07-30_at_2.57.35_PM copy.jpeg')",
           filter: 'brightness(var(--img-brightness)) contrast(var(--img-contrast))',
