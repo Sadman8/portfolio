@@ -34,7 +34,7 @@ export default function Hero() {
       <div
         className="min-h-screen"
         style={{
-          backgroundImage: "url('/bg.jpg')",
+          backgroundImage: "url('/home/project/public/WhatsApp_Image_2026-07-24_at_12.47.00_AM.jpeg')",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
           backgroundSize: "contain",
