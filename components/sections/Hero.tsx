@@ -32,26 +32,45 @@ export default function Hero() {
       ref={ref}
       className="relative flex min-h-screen items-end sm:items-center justify-center overflow-hidden pb-16 pt-32 sm:pt-20"
     >
-      {/* Full-bleed portrait — brightened, blended */}
+      {/* Radial soft glow behind subject — visible in dark mode so dark clothing edges don't blend */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
+        aria-hidden
+      >
+        <div
+          className="h-[55vh] w-[55vh] rounded-full blur-[90px]"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(124,92,255,0.28) 0%, rgba(0,231,255,0.12) 45%, transparent 70%)',
+          }}
+        />
+      </div>
+
+      {/* Full-bleed portrait — background-transparent PNG, theme-aware blend */}
       <motion.div
         style={{ y: imageY, scale: imageScale }}
         className="absolute inset-0 z-0 flex items-center justify-center md:block"
       >
         <motion.img
-          src="/WhatsApp_Image_2026-07-24_at_12.47.00_AM.jpeg"
+          src="/image.png"
           alt={personalInfo.name}
           className="h-full w-full object-contain object-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2.6, duration: 1.2 }}
           style={{
-            mixBlendMode: 'lighten',
-            filter: 'brightness(1.2) contrast(1.05)',
+            mixBlendMode: 'var(--img-blend)' as React.CSSProperties['mixBlendMode'],
+            filter:
+              'brightness(var(--img-brightness)) contrast(var(--img-contrast)) drop-shadow(0 25px 50px rgba(124,92,255,0.25))',
           }}
         />
         {/* Gradient overlays for readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/20 to-[#050505]/50" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/40 via-transparent to-[#050505]/40" />
+        <div
+          className="absolute inset-0 bg-gradient-to-t from-[var(--hero-overlay-t)] via-[var(--hero-overlay-mid)] to-[var(--hero-overlay-top)]"
+        />
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-[var(--hero-overlay-side)] via-transparent to-[var(--hero-overlay-side)]"
+        />
       </motion.div>
 
       {/* Floating subtle blobs */}
@@ -76,16 +95,13 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2.8, duration: 0.6 }}
-          className="mb-6 font-inter text-xs tracking-[0.3em] text-white/40 uppercase"
+          className="mb-6 font-inter text-xs tracking-[0.3em] uppercase"
+          style={{ color: 'var(--text-muted)' }}
         >
-                
         </motion.p>
 
         {/* Big bold headline */}
-        {/* Split headline across the picture - moved down */}
         <div className="w-full flex flex-col lg:flex-row justify-between items-center lg:items-center gap-4 my-auto mt-20 sm:mt-0">
-          
-          {/* Left side: Applied Differently */}
           <h1 className="font-grotesk text-3xl font-bold leading-[0.95] tracking-tight sm:text-5xl lg:text-6xl text-center lg:text-left">
             <span className="block overflow-hidden">
               <motion.span
@@ -99,8 +115,10 @@ export default function Hero() {
             </span>
           </h1>
 
-          {/* Right side: Creative Developer */}
-          <h1 className="font-grotesk text-3xl font-bold leading-[0.95] tracking-tight text-white sm:text-5xl lg:text-6xl text-center lg:text-right">
+          <h1
+            className="font-grotesk text-3xl font-bold leading-[0.95] tracking-tight sm:text-5xl lg:text-6xl text-center lg:text-right"
+            style={{ color: 'var(--text-primary)' }}
+          >
             <span className="block overflow-hidden">
               <motion.span
                 initial={{ y: '100%' }}
@@ -112,14 +130,15 @@ export default function Hero() {
               </motion.span>
             </span>
           </h1>
-
         </div>
+
         {/* Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 3.6, duration: 0.6 }}
-          className="mx-auto mt-8 max-w-xl font-inter text-sm leading-relaxed text-white/50 sm:text-base"
+          className="mx-auto mt-8 max-w-xl font-inter text-sm leading-relaxed sm:text-base"
+          style={{ color: 'var(--text-secondary)' }}
         >
           {personalInfo.bio}
         </motion.p>
@@ -140,13 +159,18 @@ export default function Hero() {
           </button>
           <button
             onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="rounded-full border border-white/15 bg-black/30 px-8 py-4 font-inter text-sm font-medium text-white/80 backdrop-blur-xl transition-all duration-300 hover:border-white/30 hover:bg-black/50"
+            className="rounded-full border px-8 py-4 font-inter text-sm font-medium backdrop-blur-xl transition-all duration-300"
+            style={{
+              borderColor: 'var(--border)',
+              backgroundColor: 'var(--bg-card)',
+              color: 'var(--text-secondary)',
+            }}
           >
             About Me
           </button>
         </motion.div>
 
-        {/* Stats row — heynesh style */}
+        {/* Stats row */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -155,8 +179,16 @@ export default function Hero() {
         >
           {personalInfo.stats.slice(0, 3).map((stat) => (
             <div key={stat.label} className="text-center">
-              <p className="font-grotesk text-3xl font-bold text-white sm:text-4xl">{stat.value}</p>
-              <p className="mt-1 font-inter text-[10px] tracking-[0.2em] text-white/40 uppercase">
+              <p
+                className="font-grotesk text-3xl font-bold sm:text-4xl"
+                style={{ color: 'var(--text-primary)' }}
+              >
+                {stat.value}
+              </p>
+              <p
+                className="mt-1 font-inter text-[10px] tracking-[0.2em] uppercase"
+                style={{ color: 'var(--text-muted)' }}
+              >
                 {stat.label}
               </p>
             </div>
@@ -170,7 +202,8 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 4.3, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 text-white/30 hover:text-white/60 transition-colors"
+        className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-2 transition-colors"
+        style={{ color: 'var(--text-muted)' }}
         aria-label="Scroll down"
       >
         <span className="font-inter text-[10px] tracking-[0.3em] uppercase">Scroll</span>

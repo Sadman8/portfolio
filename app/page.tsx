@@ -8,6 +8,7 @@ import ScrollProgress from '@/components/ScrollProgress';
 import Navigation from '@/components/Navigation';
 import CommandPalette from '@/components/CommandPalette';
 import Hero from '@/components/sections/Hero';
+import News from '@/components/sections/News';
 import About from '@/components/sections/About';
 import Skills from '@/components/sections/Skills';
 import Projects from '@/components/sections/Projects';
@@ -33,6 +34,7 @@ export default function Home() {
 
       <main className="relative">
         <Hero />
+        <News />
         <About />
         <Skills />
         <Projects />
